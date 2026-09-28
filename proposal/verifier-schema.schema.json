@@ -13,7 +13,29 @@
         "probe-unreachable", "digest-unbound", "self-referential"
       ]
     },
-    "evidence": { "type": "string", "enum": ["terms", "probe", "purchase"] },
+    "evidence": { "type": "string", "enum": ["none", "terms", "probe", "purchase"] },
+    "detail": {
+      "type": "object",
+      "description": "Optional machine-readable companion to reason, for codes that reference a specific mismatched field.",
+      "properties": {
+        "field": { "type": "string" },
+        "expected": { "type": "string" },
+        "got": { "type": "string" }
+      }
+    },
+    "accepts_index": {
+      "type": "integer",
+      "description": "Index into the challenge's accepts array that this verdict, digest, and mapping apply to. Required whenever the resolved challenge carries more than one accept."
+    },
+    "attestation": {
+      "type": "object",
+      "description": "A signed record the verifier publishes at a location independent of any resource operator's domain, so a client can check the verifier's independence claim against a published artifact rather than a bare declaration.",
+      "properties": {
+        "key_url": { "type": "string", "format": "uri" },
+        "record_url": { "type": "string", "format": "uri" },
+        "signed": { "type": "boolean" }
+      }
+    },
     "observed_at": { "type": "string", "format": "date-time" },
     "checked_at": { "type": "string", "format": "date-time" },
     "untested": {
