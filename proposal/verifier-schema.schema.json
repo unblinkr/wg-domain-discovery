@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Verifier verdict object",
+  "type": "object",
+  "required": ["verdict", "reason", "evidence", "observed_at", "checked_at", "untested"],
+  "properties": {
+    "verdict": { "type": "string", "enum": ["true", "false", "inconclusive"] },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "settled-under-terms", "probe-ok", "no-domain", "wrong-domain",
+        "mapping-unknown", "mapping-stale", "terms-mismatch",
+        "probe-unreachable", "digest-unbound", "self-referential"
+      ]
+    },
+    "evidence": { "type": "string", "enum": ["terms", "probe", "purchase"] },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "checked_at": { "type": "string", "format": "date-time" },
+    "untested": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["terms", "probe", "purchase"] }
+    },
+    "digest": {
+      "type": "object",
+      "required": ["scheme", "network", "asset", "payTo", "amount", "extra"],
+      "properties": {
+        "scheme": { "type": "string" },
+        "network": { "type": "string" },
+        "asset": { "type": "string" },
+        "payTo": { "type": "string" },
+        "amount": { "type": "string" },
+        "extra": { "type": "object" }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "properties": {
+        "entry": { "type": "string" },
+        "contract": { "type": "string" },
+        "read_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}
