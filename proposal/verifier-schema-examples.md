@@ -39,5 +39,4 @@ Reads the live 402 and decodes payTo/chain/asset off the challenge itself, biase
 - inconclusive ← route_state: "inconclusive", always carrying untested rather than defaulting to a pass
 - observed_at ← timestamp of the strongest check that ran; checked_at ← timestamp of this call regardless of level reached
 - digest ← the decoded challenge fields
-- attest: true issues a signed, publicly fetchable record a client can check independent of Paddock's own word.
 - `attestation` ← `attest: true` issues a signed record fetchable at a URL independent of the checked resource's own domain; `key_url` points at Paddock's published signing key, `record_url` at the specific attestation.
