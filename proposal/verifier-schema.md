@@ -5,13 +5,13 @@ Proposed for the verification pointer object in issue #5 ({url, method}). Field 
 ## Verdict object
 
 - `verdict`: `true` | `false` | `inconclusive`
-- `reason`: a code from a closed, append-only set — codes are never renumbered, split, or reused with a different meaning, since a persisted audit trail would silently reread as whatever the code means today.
+- `reason`: a code from a closed, append-only set. Codes are never renumbered, split, or reused with a different meaning, since a persisted audit trail would silently reread as whatever the code means today.
   - `settled-under-terms`, `probe-ok`, `no-domain`, `wrong-domain`, `mapping-unknown`, `mapping-stale`, `terms-mismatch`, `probe-unreachable`, `digest-unbound`, `self-referential`
-- `evidence`: `terms` | `probe` | `purchase`, weakest to strongest — the strongest level reached, never downgraded to a fresher weaker check.
+- `evidence`: `terms` | `probe` | `purchase`, weakest to strongest. Reports the strongest level reached, never downgraded to a fresher weaker check.
 - `observed_at`: when that evidence was obtained, not when the verdict was assembled. A cache-served verdict must not read as freshly observed.
-- `checked_at`: the last time the verifier ran any check at all, independent of what evidence level that check produced. Answers "how stale is my picture of this seller" — a three-week-old purchase and a probe run a minute ago both report `evidence: "purchase"`, `observed_at` three weeks back, and only `checked_at` shows the minute-old check happened.
-- `untested`: subset of `{terms, probe, purchase}` — the complement of `evidence`, not a separate vocabulary. A check that yields no level (e.g. digest recomputed against the live challenge) does not belong here; it belongs in `reason`.
-- `digest`: over the stable per-accept terms — `scheme, network, asset, payTo, amount, extra`. `maxTimeoutSeconds` stays out; it's verdict lifetime, not terms.
+- `checked_at`: the last time the verifier ran any check at all, independent of what evidence level that check produced. Answers "how stale is my picture of this seller." A three-week-old purchase and a probe run a minute ago both report `evidence: "purchase"`, `observed_at` three weeks back, and only `checked_at` shows the minute-old check happened.
+- `untested`: subset of `{terms, probe, purchase}`, the complement of `evidence`, not a separate vocabulary. A check that yields no level (e.g. digest recomputed against the live challenge) does not belong here; it belongs in `reason`.
+- `digest`: over the stable per-accept terms, `scheme, network, asset, payTo, amount, extra`. `maxTimeoutSeconds` stays out; it's verdict lifetime, not terms.
 - `mapping`: `{entry: "<scheme>/<network>/<asset>", contract: "0x…", read_at: "<ts>"}`.
 
 ## Recommendation object (separate, cites the verdict)
