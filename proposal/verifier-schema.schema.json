@@ -10,21 +10,23 @@
       "enum": [
         "settled-under-terms", "probe-ok", "no-domain", "wrong-domain",
         "mapping-unknown", "mapping-stale", "terms-mismatch",
-        "probe-unreachable", "digest-unbound", "self-referential"
+        "probe-unreachable", "no-challenge", "digest-unbound", "self-referential"
       ]
     },
     "evidence": { "type": "string", "enum": ["none", "terms", "probe", "purchase"] },
     "detail": {
       "type": "object",
-      "description": "Optional machine-readable companion to reason, for codes that reference a specific mismatched field.",
+      "description": "Companion to reason for codes that reference a specific mismatched field. field is always required when detail is present.",
       "properties": {
         "field": { "type": "string" },
         "expected": { "type": "string" },
         "got": { "type": "string" }
-      }
+      },
+      "required": ["field"]
     },
     "accepts_index": {
       "type": "integer",
+      "minimum": 0,
       "description": "Index into the challenge's accepts array that this verdict, digest, and mapping apply to. Always present; a single-accept challenge carries 0."
     },
     "attestation": {
