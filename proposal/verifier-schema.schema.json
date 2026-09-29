@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Verifier verdict object",
   "type": "object",
-  "required": ["verdict", "reason", "evidence", "observed_at", "checked_at", "untested"],
+  "required": ["verdict", "reason", "evidence", "observed_at", "checked_at", "untested", "accepts_index"],
   "properties": {
     "verdict": { "type": "string", "enum": ["true", "false", "inconclusive"] },
     "reason": {
@@ -25,16 +25,25 @@
     },
     "accepts_index": {
       "type": "integer",
-      "description": "Index into the challenge's accepts array that this verdict, digest, and mapping apply to. Required whenever the resolved challenge carries more than one accept."
+      "description": "Index into the challenge's accepts array that this verdict, digest, and mapping apply to. Always present; a single-accept challenge carries 0."
     },
     "attestation": {
       "type": "object",
-      "description": "A signed record the verifier publishes at a location independent of any resource operator's domain, so a client can check the verifier's independence claim against a published artifact rather than a bare declaration.",
+      "description": "A signed record making the independence claim in self-referential checkable. subject names the two identities being compared; a client discounts the attestation if verifier_domain is not distinct from resource_domain, or if key_url/record_url do not resolve under verifier_domain.",
       "properties": {
-        "key_url": { "type": "string", "format": "uri" },
-        "record_url": { "type": "string", "format": "uri" },
-        "signed": { "type": "boolean" }
-      }
+        "key_url": { "type": "string", "format": "uri", "description": "Where the verifier publishes its signing key, under verifier_domain." },
+        "record_url": { "type": "string", "format": "uri", "description": "The specific signed record for this verdict, under verifier_domain." },
+        "subject": {
+          "type": "object",
+          "required": ["resource_domain", "verifier_domain"],
+          "properties": {
+            "resource_domain": { "type": "string" },
+            "verifier_domain": { "type": "string" }
+          }
+        },
+        "valid_until": { "type": "string", "format": "date-time" }
+      },
+      "required": ["key_url", "record_url", "subject", "valid_until"]
     },
     "observed_at": { "type": "string", "format": "date-time" },
     "checked_at": { "type": "string", "format": "date-time" },
@@ -62,5 +71,13 @@
         "read_at": { "type": "string", "format": "date-time" }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "reason": { "enum": ["wrong-domain", "terms-mismatch", "mapping-unknown", "mapping-stale"] } }
+      },
+      "then": { "required": ["detail"] }
+    }
+  ]
 }
