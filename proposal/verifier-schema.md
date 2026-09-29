@@ -9,6 +9,7 @@ Proposed for the verification pointer object in issue #5 ({url, method}). Field 
   - `settled-under-terms`, `probe-ok`, `no-domain`, `wrong-domain`, `mapping-unknown`, `mapping-stale`, `terms-mismatch`, `digest-unbound`, `self-referential`
   - `probe-unreachable`: the probe was attempted and got no response. `evidence` records the strongest level reached by a check that completed before the probe; if none completed, `evidence: none`. The unreachable attempt itself never advances `evidence`.
   - `no-challenge`: the endpoint answered but did not present a payment challenge to evaluate (a 404, a 429, or a 200 that never requests payment). Distinct from `probe-unreachable`, which is no response at all.
+  - `wrong-domain`: the challenge's EIP-712 signing domain (`extra.name`/`extra.version`) does not match the asset contract's. Distinct from `resource_domain`/`verifier_domain` in `attestation` below, which are internet domains.
 - `evidence`: `none` | `terms` | `probe` | `purchase`, weakest to strongest. Reports the strongest level reached, never downgraded to a fresher weaker check. `none` when no check reached a level, for example when the only check that ran was a digest verification that failed (`reason: digest-unbound`). This is what makes `untested: [terms, probe, purchase]` reachable.
 
 `terms` means the verifier checked the discovery record's stated terms without contacting the live resource. A verifier that reads the live challenge reaches `probe` directly, so `terms` is reserved for checks made against the discovery record alone.
