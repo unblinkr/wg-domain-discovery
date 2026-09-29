@@ -17,8 +17,8 @@ Free record lookup at `GET /v1/resolve?url=`, paid verdict over x402 at `GET /v1
   "accepts_index": 0,
   "detail": {
     "field": "extra.name",
-    "expected": "the domain the client resolved the challenge from",
-    "got": "the domain the signature actually verifies under"
+    "expected": "api.example.com",
+    "got": "example-cdn.net"
   },
   "digest": {
     "scheme": "exact",
