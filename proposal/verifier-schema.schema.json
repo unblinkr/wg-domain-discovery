@@ -29,7 +29,7 @@
     },
     "attestation": {
       "type": "object",
-      "description": "A signed record making the independence claim in self-referential checkable. subject names the two identities being compared; a client discounts the attestation if verifier_domain is not distinct from resource_domain, or if key_url/record_url do not resolve under verifier_domain.",
+      "description": "A signed record making the independence claim below checkable. subject names the two identities being compared; a client discounts the attestation if verifier_domain is not distinct from resource_domain, or if key_url/record_url do not resolve under verifier_domain.",
       "properties": {
         "key_url": { "type": "string", "format": "uri", "description": "Where the verifier publishes its signing key, under verifier_domain." },
         "record_url": { "type": "string", "format": "uri", "description": "The specific signed record for this verdict, under verifier_domain." },
