@@ -39,4 +39,4 @@ Reads the live 402 and decodes payTo/chain/asset off the challenge itself, biase
 - inconclusive ← route_state: "inconclusive", always carrying untested rather than defaulting to a pass
 - observed_at ← timestamp of the strongest check that ran; checked_at ← timestamp of this call regardless of level reached
 - digest ← the decoded challenge fields
-- `attestation` ← `attest: true` issues a signed record fetchable at a URL independent of the checked resource's own domain; `key_url` points at Paddock's published signing key, `record_url` at the specific attestation.
+- `attestation` ← `attest: true` issues a signed record under Paddock's own domain (paddock.finance), distinct from the checked resource's domain. `subject.resource_domain` is the seller's domain from the resolved challenge; `subject.verifier_domain` is paddock.finance; `key_url` and `record_url` resolve under paddock.finance; `valid_until` bounds the attestation's freshness.
