@@ -2,7 +2,7 @@
 
 ## 1. nohumans.directory
 
-Free record lookup at `GET /v1/resolve?url=`, paid verdict over x402 at `GET /v1/verdict/{id}`. Today emits `pay | caution | avoid` with prose reasons; under this schema that becomes the `recommendation` object citing a `verdict` built from the closed reason set.
+Free record lookup at `GET /v1/resolve?url=`, paid verdict over x402 at `GET /v1/listings/{id}/verdict`. Today emits `pay | caution | avoid` with prose reasons; under this schema that becomes the `recommendation` object citing a `verdict` built from the closed reason set.
 
 ## 2. Generic example
 
@@ -14,6 +14,12 @@ Free record lookup at `GET /v1/resolve?url=`, paid verdict over x402 at `GET /v1
   "observed_at": "2026-09-28T18:40:00Z",
   "checked_at": "2026-09-28T18:40:00Z",
   "untested": ["purchase"],
+  "accepts_index": 0,
+  "detail": {
+    "field": "extra.name",
+    "expected": "the domain the client resolved the challenge from",
+    "got": "the domain the signature actually verifies under"
+  },
   "digest": {
     "scheme": "exact",
     "network": "eip155:8453",
