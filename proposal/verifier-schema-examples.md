@@ -17,8 +17,8 @@ Free record lookup at `GET /v1/resolve?url=`, paid verdict over x402 at `GET /v1
   "accepts_index": 0,
   "detail": {
     "field": "extra.name",
-    "expected": "api.example.com",
-    "got": "example-cdn.net"
+    "expected": "USD Coin",
+    "got": "USDC"
   },
   "digest": {
     "scheme": "exact",
